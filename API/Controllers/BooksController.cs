@@ -1,19 +1,24 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Web.Http;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Core;
+using Model;
+using Microsoft.AspNetCore.Http;
 
-namespace API.Controllers
+namespace API.Controllers 
 {
 	[Route("api/[controller]")]
 	[ApiController]
-	public class ValuesController : ControllerBase
+	public class BooksController : Controller
 	{
 		// GET api/values
 		[HttpGet]
 		public ActionResult<IEnumerable<string>> Get()
 		{
+			var service = new Core.BookService();
 			return new string[] { "value1", "value2" };
 		}
 
@@ -26,8 +31,26 @@ namespace API.Controllers
 
 		// POST api/values
 		[HttpPost]
-		public void Post([FromBody] string value)
+		public IActionResult Post([FromBody] Book book)
 		{
+			Book newBook = new Model.Book()
+			{
+				ISBN = book.ISBN,
+				Author = book.Author,
+				Title = book.Title,
+				Language = book.Language,
+				Pages = book.Pages
+			};
+			try
+			{
+				var service = new Core.BookService();
+				book = service.Insert(newBook);
+				return Ok(book);
+			}
+			catch(Exception ex)
+			{
+				return new StatusCodeResult(StatusCodes.Status500InternalServerError);
+			}
 		}
 
 		// PUT api/values/5
