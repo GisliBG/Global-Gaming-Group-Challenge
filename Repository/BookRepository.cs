@@ -4,7 +4,7 @@ using System;
 
 namespace Repository
 {
-	public class BookRepository
+	public class BookRepository : IBookRepository
 	{
 		DataAccess db;
 		public BookRepository()

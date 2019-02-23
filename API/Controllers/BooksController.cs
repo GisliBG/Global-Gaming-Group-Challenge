@@ -15,10 +15,12 @@ namespace API.Controllers
 	[ApiController]
 	public class BooksController : Controller
 	{
-
+		private readonly IBookService _bookService;
 		private readonly ILogger<BooksController> _logger;
-		public BooksController(ILogger<BooksController> logger)
+
+		public BooksController(IBookService bookService , ILogger<BooksController> logger)
 		{
+			_bookService = bookService;
 			_logger = logger;
 		}
 
@@ -26,7 +28,6 @@ namespace API.Controllers
 		[HttpGet]
 		public ActionResult<IEnumerable<string>> Get()
 		{
-			var service = new Core.BookService();
 			return new string[] { "value1", "value2" };
 		}
 
@@ -51,8 +52,7 @@ namespace API.Controllers
 			};
 			try
 			{
-				var service = new Core.BookService();
-				book = service.Insert(newBook);
+				book = _bookService.Insert(newBook);
 				return Ok(book);
 			}
 			catch(Exception ex)

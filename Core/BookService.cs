@@ -3,12 +3,12 @@ using Repository;
 
 namespace Core
 {
-	public class BookService
+	public class BookService : IBookService
 	{
-		Repository.BookRepository test;
-		public BookService()
+		IBookRepository _bookRepository;
+		public BookService(IBookRepository bookRepository)
 		{
-			test = new Repository.BookRepository();
+			_bookRepository = bookRepository;
 		}
 
 		public Model.Book Insert(Model.Book newBook)
@@ -16,7 +16,7 @@ namespace Core
 			try
 			{
 				newBook.id = Guid.NewGuid();
-				return test.Insert(newBook);
+				return _bookRepository.Insert(newBook);
 			}
 			catch(Exception ex)
 			{
