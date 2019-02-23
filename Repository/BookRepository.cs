@@ -1,5 +1,5 @@
 ﻿
-using Model;
+using Model.Book;
 using System;
 
 namespace Repository
@@ -12,7 +12,7 @@ namespace Repository
 			db = new DataAccess();
 		}
 
-		public Book Insert(Model.Book book)
+		public Book Insert(Book book)
 		{
 			try
 			{

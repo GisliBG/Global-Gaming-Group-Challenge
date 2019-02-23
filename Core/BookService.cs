@@ -1,4 +1,5 @@
 ﻿using System;
+using Model.Book;
 using Repository;
 
 namespace Core
@@ -11,7 +12,7 @@ namespace Core
 			_bookRepository = bookRepository;
 		}
 
-		public Model.Book Insert(Model.Book newBook)
+		public Book Insert(Book newBook)
 		{
 			try
 			{

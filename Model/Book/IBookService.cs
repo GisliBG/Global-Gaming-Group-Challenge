@@ -1,11 +1,11 @@
-﻿using Model;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using Model;
 
-namespace Repository
+namespace Model.Book
 {
-	public interface IBookRepository
+	public interface IBookService
 	{
 		Book Insert(Book book);
 	}

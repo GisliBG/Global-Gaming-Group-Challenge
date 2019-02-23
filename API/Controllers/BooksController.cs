@@ -5,7 +5,7 @@ using System.Web.Http;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Core;
-using Model;
+using Model.Book;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 
@@ -42,7 +42,7 @@ namespace API.Controllers
 		[HttpPost]
 		public IActionResult Post([FromBody] Book book)
 		{
-			Book newBook = new Model.Book()
+			Book newBook = new Book()
 			{
 				ISBN = book.ISBN,
 				Author = book.Author,
