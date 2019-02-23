@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Core;
 using Model;
 using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.Logging;
 
 namespace API.Controllers 
 {
@@ -14,6 +15,13 @@ namespace API.Controllers
 	[ApiController]
 	public class BooksController : Controller
 	{
+
+		private readonly ILogger<BooksController> _logger;
+		public BooksController(ILogger<BooksController> logger)
+		{
+			_logger = logger;
+		}
+
 		// GET api/values
 		[HttpGet]
 		public ActionResult<IEnumerable<string>> Get()
@@ -49,6 +57,7 @@ namespace API.Controllers
 			}
 			catch(Exception ex)
 			{
+				_logger.LogError(ex, "Error creating new book");
 				return new StatusCodeResult(StatusCodes.Status500InternalServerError);
 			}
 		}
