@@ -17,28 +17,20 @@ namespace Repository
 		{
 			
 			connection = new MySqlConnection(connectionString);
-
-			try
-			{
-				connection.Open();
-				// Perform database operations
-			}
-			catch (Exception ex)
-			{
-				Console.WriteLine(ex.ToString());
-			}
 			
 		}
 
 		public void Insert(string sql)
 		{
-			MySqlCommand cmd = new MySqlCommand(sql, connection);
-			cmd.ExecuteNonQuery();
+				connection.Open();
+				MySqlCommand cmd = new MySqlCommand(sql, connection);
+				cmd.ExecuteNonQuery();
+				connection.Close();	
 		}
 
 		~DataAccess()
 		{
-			connection.Close();
+			connection.Dispose();
 		}
 	}
 }

@@ -36,6 +36,7 @@ namespace API
 			services.AddTransient<IBookService, BookService>();
 			services.AddTransient<IBookRepository, BookRepository>();
 			services.AddTransient<IUserService, UserService>();
+			services.AddTransient<IUserRepository, UserRepository>();
 		}
 
 		// This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
