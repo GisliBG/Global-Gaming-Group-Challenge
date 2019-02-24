@@ -14,6 +14,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Repository;
 using Serilog;
+using Model.User;
 
 namespace API
 {
@@ -34,6 +35,7 @@ namespace API
 			services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 			services.AddTransient<IBookService, BookService>();
 			services.AddTransient<IBookRepository, BookRepository>();
+			services.AddTransient<IUserService, UserService>();
 		}
 
 		// This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
