@@ -29,6 +29,20 @@ namespace Core
 			}
 		}
 
+		public User GetUser(Guid userId)
+		{
+			try
+			{
+				var user = _userRepository.GetUser(userId);
+				user.Password = null;
+				return user;
+			}
+			catch(Exception ex)
+			{
+				throw ex;
+			}
+		}
+
 		public void RemoveUser(User user)
 		{
 			try

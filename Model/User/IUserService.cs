@@ -8,5 +8,6 @@ namespace Model.User
 	{
 		User CreateUser(User user);
 		void RemoveUser(User user);
+		User GetUser(Guid userId);
 	}
 }

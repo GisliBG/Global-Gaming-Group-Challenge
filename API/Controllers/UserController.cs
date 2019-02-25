@@ -22,6 +22,26 @@ namespace API.Controllers
 			_logger = logger;
 		}
 
+		[HttpGet("{userId}")]
+		public IActionResult GetUser(string userId)
+		{
+			if(userId == null)
+			{
+				return BadRequest();
+			}
+
+			try
+			{
+				var user = _userService.GetUser(new Guid(userId));
+				return Ok(user);
+			}
+			catch(Exception ex)
+			{
+				_logger.LogError("Error Getting user", ex);
+				return BadRequest();
+			}
+		}
+
 		[HttpPost]
 		public IActionResult AddUser([FromBody] User user)
 		{
