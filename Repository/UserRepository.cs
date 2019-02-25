@@ -66,6 +66,7 @@ namespace Repository
 				user.LastName = reader.GetValue(4).ToString();
 				user.Address = reader.GetValue(5).ToString();
 				user.Phone = reader.GetValue(6).ToString();
+				reader.Close();
 				connection.Close();
 				return user;
 			}

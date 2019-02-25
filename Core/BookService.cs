@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using Model.Book;
 using Repository;
 
@@ -21,10 +22,20 @@ namespace Core
 			}
 			catch(Exception ex)
 			{
-				throw new Exception(ex.Message);
+				throw ex;
 			}
-			
+		}
 
+		public IEnumerable<Book> GetAll()
+		{
+			try
+			{
+				return _bookRepository.GetAll();
+			}
+			catch (Exception ex)
+			{
+				throw ex;
+			}
 		}
 	}
 }

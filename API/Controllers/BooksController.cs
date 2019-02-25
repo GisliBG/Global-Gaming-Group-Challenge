@@ -23,36 +23,39 @@ namespace API.Controllers
 			_bookService = bookService;
 			_logger = logger;
 		}
-
-		// GET api/values
+		
 		[HttpGet]
-		public ActionResult<IEnumerable<string>> Get()
+		public ActionResult<IEnumerable<Book>> GetAll()
 		{
-			return new string[] { "value1", "value2" };
+			try
+			{
+				var books = _bookService.GetAll();
+				return Ok(books);
+			}
+			catch(Exception ex)
+			{
+				_logger.LogError(ex, "Error getting books");
+				return new StatusCodeResult(StatusCodes.Status500InternalServerError);
+			}
 		}
 
-		// GET api/values/5
-		[HttpGet("{id}")]
-		public ActionResult<string> Get(int id)
-		{
-			return "value";
-		}
-
-		// POST api/values
 		[HttpPost]
 		public IActionResult Post([FromBody] Book book)
 		{
-			Book newBook = new Book()
+
+			if (book == null)
 			{
-				ISBN = book.ISBN,
-				Author = book.Author,
-				Title = book.Title,
-				Language = book.Language,
-				Pages = book.Pages
-			};
+				return BadRequest();
+			}
+
+			if (!ModelState.IsValid)
+			{
+				return StatusCode(412);
+			}
+
 			try
 			{
-				book = _bookService.Insert(newBook);
+				book = _bookService.Insert(book);
 				return Ok(book);
 			}
 			catch(Exception ex)
@@ -62,16 +65,6 @@ namespace API.Controllers
 			}
 		}
 
-		// PUT api/values/5
-		[HttpPut("{id}")]
-		public void Put(int id, [FromBody] string value)
-		{
-		}
-
-		// DELETE api/values/5
-		[HttpDelete("{id}")]
-		public void Delete(int id)
-		{
-		}
+		
 	}
 }

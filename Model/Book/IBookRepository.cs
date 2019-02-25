@@ -8,5 +8,6 @@ namespace Model.Book
 	public interface IBookRepository
 	{
 		Book Insert(Book book);
+		IEnumerable<Book> GetAll();
 	}
 }

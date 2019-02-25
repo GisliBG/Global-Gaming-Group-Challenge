@@ -9,6 +9,11 @@ namespace Test.CoreTests
 {
 	public class MockBookRepository : IBookRepository
 	{
+		public IEnumerable<Book> GetAll()
+		{
+			throw new NotImplementedException();
+		}
+
 		public Book Insert(Book book)
 		{
 			return book;
