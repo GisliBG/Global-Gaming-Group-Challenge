@@ -21,7 +21,7 @@ namespace Test.CoreTests
 		}
 
 		[TestMethod]
-		public void CreateUser()
+		public void CreateUser_WithValidCredentials()
 		{
 			// Arrange
 			var user = new User()

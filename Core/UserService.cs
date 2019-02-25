@@ -28,5 +28,25 @@ namespace Core
 				throw ex;
 			}
 		}
+
+		public void RemoveUser(User user)
+		{
+			try
+			{
+				var validUser = _userRepository.GetUser(user.Id);
+				if(validUser.Password == user.Password && validUser.Email == user.Email)
+				{
+					_userRepository.Remove(user.Id);
+				}
+				else
+				{
+					throw new Exception("Invalid user credentials");
+				}
+			}
+			catch (Exception ex)
+			{
+				throw ex;
+			}
+		}
 	}
 }

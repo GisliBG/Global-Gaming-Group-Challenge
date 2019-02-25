@@ -7,5 +7,6 @@ namespace Model.User
 	public interface IUserService
 	{
 		User CreateUser(User user);
+		void RemoveUser(User user);
 	}
 }

@@ -48,6 +48,25 @@ namespace API.Controllers
 			
 		}
 
+		[HttpDelete]
+		public IActionResult RemoveUser([FromBody] User user)
+		{
+			if (user == null || user.Id == null || user.Password == null)
+			{
+				return BadRequest();
+			}
+
+			try
+			{
+				_userService.RemoveUser(user);
+				return Ok();
+			}
+			catch(Exception ex)
+			{
+				_logger.LogError("Error creating new user", ex);
+				return new StatusCodeResult(StatusCodes.Status500InternalServerError);
+			}
+		}
 
 	}
 }

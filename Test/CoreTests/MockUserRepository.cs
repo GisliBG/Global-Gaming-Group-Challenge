@@ -11,5 +11,15 @@ namespace Test.CoreTests
 		{
 			return user;
 		}
+
+		public User GetUser(Guid id)
+		{
+			throw new NotImplementedException();
+		}
+
+		public void Remove(Guid id)
+		{
+			throw new NotImplementedException();
+		}
 	}
 }
