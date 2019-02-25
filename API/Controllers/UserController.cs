@@ -68,6 +68,31 @@ namespace API.Controllers
 			
 		}
 
+		[HttpPut]
+		public IActionResult UpdateUser([FromBody] User user)
+		{
+			if(user == null)
+			{
+				return BadRequest();
+			}
+
+			if (!ModelState.IsValid)
+			{
+				return StatusCode(412);
+			}
+
+			try
+			{
+				_userService.UpdateUser(user);
+				return Ok();
+			}
+			catch(Exception ex)
+			{
+				_logger.LogError("Error updating user", ex);
+				return new StatusCodeResult(StatusCodes.Status500InternalServerError);
+			}
+		}
+
 		[HttpDelete]
 		public IActionResult RemoveUser([FromBody] User user)
 		{

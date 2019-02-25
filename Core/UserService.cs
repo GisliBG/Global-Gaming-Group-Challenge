@@ -62,5 +62,17 @@ namespace Core
 				throw ex;
 			}
 		}
+
+		public void UpdateUser(User user)
+		{
+			try
+			{
+				_userRepository.Update(user);
+			}
+			catch(Exception ex)
+			{
+				throw ex;
+			}
+		}
 	}
 }

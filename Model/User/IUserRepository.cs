@@ -9,5 +9,6 @@ namespace Model.User
 		User AddUser(User user);
 		void Remove(Guid id);
 		User GetUser(Guid id);
+		void Update(User user);
 	}
 }

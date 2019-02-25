@@ -21,5 +21,10 @@ namespace Test.CoreTests
 		{
 			throw new NotImplementedException();
 		}
+
+		public void Update(User user)
+		{
+			throw new NotImplementedException();
+		}
 	}
 }

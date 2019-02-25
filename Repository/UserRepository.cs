@@ -23,13 +23,7 @@ namespace Repository
 				connection.Open();
 				string sql = "INSERT INTO USERS (id, EMAIL, Password, FIRST_NAME, LAST_NAME, ADDRESS, PHONE) VALUES (@id, @email, @password, @first, @last, @address, @phone)";
 				MySqlCommand cmd = new MySqlCommand(sql, connection);
-				cmd.Parameters.Add("@id", MySqlDbType.Binary).Value = user.Id;
-				cmd.Parameters.AddWithValue("@email", user.Email);
-				cmd.Parameters.AddWithValue("@password", user.Password);
-				cmd.Parameters.AddWithValue("@first", user.FirstName);
-				cmd.Parameters.AddWithValue("@last", user.LastName);
-				cmd.Parameters.AddWithValue("@address", user.Address);
-				cmd.Parameters.AddWithValue("@phone", user.Phone);
+				cmd = SetParamsToUsers(cmd, user.Id, user.Email, user.Password, user.FirstName, user.LastName, user.Address, user.Phone);
 				cmd.ExecuteNonQuery();
 				connection.Close();
 				return user;
@@ -38,6 +32,19 @@ namespace Repository
 			{
 				throw ex;
 			}
+		}
+
+		private MySqlCommand SetParamsToUsers(MySqlCommand cmd, Guid id, string email, string password, string firstName, string lastName, string address, string phone)
+		{
+			cmd.Parameters.Add("@id", MySqlDbType.Binary).Value = id;
+			cmd.Parameters.AddWithValue("@email", email);
+			cmd.Parameters.AddWithValue("@password", password);
+			cmd.Parameters.AddWithValue("@first", firstName);
+			cmd.Parameters.AddWithValue("@last", lastName);
+			cmd.Parameters.AddWithValue("@address", address);
+			cmd.Parameters.AddWithValue("@phone", phone);
+
+			return cmd;
 		}
 
 		public User GetUser(Guid id)
@@ -86,6 +93,21 @@ namespace Repository
 
 		}
 
-		
+		public void Update(User user)
+		{
+			try
+			{
+				connection.Open();
+				string sql = "UPDATE USERS SET Email = @email, Password = @password, FIRST_NAME = @first, LAST_NAME = @last, ADDRESS = @address, PHONE = @phone WHERE Id = @id";
+				MySqlCommand cmd = new MySqlCommand(sql, connection);
+				cmd = SetParamsToUsers(cmd, user.Id, user.Email, user.Password, user.FirstName, user.LastName, user.Address, user.Phone);
+				cmd.ExecuteNonQuery();
+				connection.Close();
+			}
+			catch(Exception ex)
+			{
+				throw ex;
+			}
+		}
 	}
 }
