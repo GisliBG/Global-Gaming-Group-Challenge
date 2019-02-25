@@ -26,7 +26,7 @@ namespace Core
 			}
 		}
 
-		public IEnumerable<Book> GetAll()
+		public List<Book> GetAll()
 		{
 			try
 			{

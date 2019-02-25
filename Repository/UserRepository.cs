@@ -1,4 +1,5 @@
-﻿using Model.User;
+﻿using Model.Purchase;
+using Model.User;
 using MySql.Data.MySqlClient;
 using System;
 using System.Collections.Generic;
@@ -106,6 +107,34 @@ namespace Repository
 				connection.Close();
 			}
 			catch(Exception ex)
+			{
+				throw ex;
+			}
+		}
+
+		public void PurchaseBooks(Purchase purchase, Guid userId)
+		{
+			try
+			{
+				connection.Open();
+				string purchaseSQL = "INSERT INTO PURCHASE (id, user_id) VALUES (@id, @userId)";
+				MySqlCommand cmd = new MySqlCommand(purchaseSQL, connection);
+				cmd.Parameters.Add("@id", MySqlDbType.Binary).Value = purchase.Id;
+				cmd.Parameters.Add("@userId", MySqlDbType.Binary).Value = userId;
+				cmd.ExecuteNonQuery();
+
+				foreach(var purchaseItem in purchase.purchaseItems)
+				{
+					string purchaseItemSQL = "INSERT INTO PURCHASE_ITEM (id, book_id, total_price, number_of_items) VALUES (@id, @bookId, @totalPrice, @numberOfItems)";
+					cmd = new MySqlCommand(purchaseItemSQL, connection);
+					cmd.Parameters.Add("@id", MySqlDbType.Binary).Value = purchaseItem.Id;
+					cmd.Parameters.Add("@bookId", MySqlDbType.Binary).Value = purchaseItem.Book.id;
+					cmd.Parameters.AddWithValue("@totalPrice", purchaseItem.Book.Price * purchaseItem.Quantity);
+					cmd.Parameters.AddWithValue("@numberOfItems", purchaseItem.Quantity);
+					cmd.ExecuteNonQuery();
+				}
+			}
+			catch (Exception ex)
 			{
 				throw ex;
 			}

@@ -9,7 +9,7 @@ namespace Test.CoreTests
 {
 	public class MockBookRepository : IBookRepository
 	{
-		public IEnumerable<Book> GetAll()
+		public List<Book> GetAll()
 		{
 			throw new NotImplementedException();
 		}

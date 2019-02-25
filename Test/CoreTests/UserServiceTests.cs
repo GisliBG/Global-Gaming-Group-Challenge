@@ -1,5 +1,6 @@
 ﻿using Core;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Model.Book;
 using Model.User;
 using System;
 using System.Collections.Generic;
@@ -11,13 +12,15 @@ namespace Test.CoreTests
 	public class UserServiceTests
 	{
 		private IUserRepository _userRepository;
+		private IBookRepository _bookrepository;
 		private IUserService _userService;
 
 		[TestInitialize]
 		public void Setup()
 		{
 			_userRepository = new MockUserRepository();
-			_userService = new UserService(_userRepository);
+			_bookrepository = new MockBookRepository();
+			_userService = new UserService(_userRepository, _bookrepository);
 		}
 
 		[TestMethod]

@@ -1,11 +1,10 @@
-﻿using System.Web.Http;
-using System.Threading.Tasks;
+﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Core;
-using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
+using Model.Purchase;
 using Model.User;
 using System;
+using System.Collections.Generic;
 
 namespace API.Controllers
 {
@@ -109,6 +108,26 @@ namespace API.Controllers
 			catch(Exception ex)
 			{
 				_logger.LogError("Error creating new user", ex);
+				return new StatusCodeResult(StatusCodes.Status500InternalServerError);
+			}
+		}
+
+		[HttpPost("Purchase/{userId}")]
+		public IActionResult PurchaseBooks([FromBody] List<PurchaseItem> bookPurchases, string userId)
+		{
+			if(bookPurchases == null || String.IsNullOrEmpty(userId))
+			{
+				return BadRequest();
+			}
+
+			try
+			{
+				var purchase = _userService.Purchase(bookPurchases, new Guid(userId));
+				return Ok(purchase);
+			}
+			catch (Exception ex)
+			{
+				_logger.LogError("Error purchasing", ex);
 				return new StatusCodeResult(StatusCodes.Status500InternalServerError);
 			}
 		}

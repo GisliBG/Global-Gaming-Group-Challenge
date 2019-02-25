@@ -8,6 +8,6 @@ namespace Model.Book
 	public interface IBookService
 	{
 		Book Insert(Book book);
-		IEnumerable<Book> GetAll();
+		List<Book> GetAll();
 	}
 }

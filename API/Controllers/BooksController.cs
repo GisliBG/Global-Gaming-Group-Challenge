@@ -1,15 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web.Http;
-using System.Threading.Tasks;
+﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Core;
-using Model.Book;
-using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
+using Model.Book;
+using System;
+using System.Collections.Generic;
 
-namespace API.Controllers 
+namespace API.Controllers
 {
 	[Route("api/[controller]")]
 	[ApiController]

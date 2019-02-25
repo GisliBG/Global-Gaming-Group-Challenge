@@ -1,4 +1,5 @@
-﻿using Model.User;
+﻿using Model.Purchase;
+using Model.User;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -13,6 +14,11 @@ namespace Test.CoreTests
 		}
 
 		public User GetUser(Guid id)
+		{
+			throw new NotImplementedException();
+		}
+
+		public void PurchaseBooks(Purchase purchase, Guid userId)
 		{
 			throw new NotImplementedException();
 		}

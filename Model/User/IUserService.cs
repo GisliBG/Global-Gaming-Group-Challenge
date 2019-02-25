@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Model.Purchase;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -10,5 +11,6 @@ namespace Model.User
 		void RemoveUser(User user);
 		User GetUser(Guid userId);
 		void UpdateUser(User user);
+		Purchase.Purchase Purchase(List<PurchaseItem> purchaseItems, Guid userId);
 	}
 }

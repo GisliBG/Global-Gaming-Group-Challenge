@@ -1,6 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
+using Model.Book;
+using Model.Purchase;
 using Model.User;
 
 namespace Core
@@ -8,10 +11,12 @@ namespace Core
 	public class UserService : IUserService
 	{
 		private readonly IUserRepository _userRepository;
+		private readonly IBookRepository _bookRepository;
 
-		public UserService(IUserRepository userRepository)
+		public UserService(IUserRepository userRepository, IBookRepository bookRepository)
 		{
 			_userRepository = userRepository;
+			_bookRepository = bookRepository;
 		}
 
 		public User CreateUser(User user)
@@ -38,6 +43,27 @@ namespace Core
 				return user;
 			}
 			catch(Exception ex)
+			{
+				throw ex;
+			}
+		}
+
+		public Purchase Purchase(List<PurchaseItem> purchaseItems, Guid userId)
+		{
+			try
+			{
+				Purchase purchase = new Purchase() { Id = Guid.NewGuid(), purchaseItems = purchaseItems};
+				var books = _bookRepository.GetAll();
+				foreach(PurchaseItem purchaseItem in purchase.purchaseItems)
+				{
+					purchaseItem.Id = Guid.NewGuid();
+					purchaseItem.Book = books.Find(book => book.id == purchaseItem.Book.id);
+				}
+				_userRepository.PurchaseBooks(purchase, userId);
+				
+				return purchase;
+			}
+			catch (Exception ex)
 			{
 				throw ex;
 			}

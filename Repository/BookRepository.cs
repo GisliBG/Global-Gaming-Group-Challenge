@@ -15,7 +15,7 @@ namespace Repository
 			connection = new MySqlConnection(connectionString);
 		}
 
-		public IEnumerable<Book> GetAll()
+		public List<Book> GetAll()
 		{
 			try
 			{
@@ -33,7 +33,9 @@ namespace Repository
 						Author = reader.GetString(2),
 						Language = reader.GetString(3),
 						Pages = reader.GetString(4),
-						id = reader.GetGuid(5)
+						id = reader.GetGuid(5),
+						Price = reader.GetInt32(6),
+						InStock = reader.GetInt32(7)
 					});
 				}
 				reader.Close();
