@@ -82,29 +82,132 @@
   
 * **Data Params**
 
-  ```
-  {
-    "Email": "string",
-    "Password": "string",
-    "FirstName": "string",
-    "LastName": "string",
-    "Address": "string"
-  }
-  ```
+	```
+		{
+			"Email": "string",
+			"Password": "string",
+			"FirstName": "string",
+			"LastName": "string",
+			"Address": "string",
+			"Phone": "string"
+		}
+	```
 * **Success Response:**
 
   * **Code:** 200 <br />
     **Content:** 
- ```
-    {
-      "Id": "Guid",
-      "Email": "string",
-      "Password": "string",
-      "FirstName": "string",
-      "LastName": "string",
-      "Address": "string"
-    }
+	```
+		{
+			"Id": "Guid",
+			"Email": "string",
+			"Password": "string",
+			"FirstName": "string",
+			"LastName": "string",
+			"Address": "string",
+			"Phone": "string"
+		}
+	```
+
+* **Error Response:**
+
+  * **Code:** 400 BAD REQUEST <br />
+  OR
+  * **Code:** 412 PRECONDITION FAILED 
+
+**Get user** 
+------
+* **URL**
+
+  /api/user/:id
+
+*  **URL Params**
+
+   **Required:**
+ 
+   `id=[guid]`
+
+* **Method:**
+  
+  `Get`
+  
+* **Success Response:**
+
+  * **Code:** 200 <br />
+    **Content:** 
 ```
+	{
+		"id": "Guid",
+		"email": "string",
+		"password": null,
+		"firstName": "string",
+		"lastName": "string",
+		"address": "string",
+		"phone": "string"
+	}
+```
+
+**Update User** 
+------
+* **URL**
+
+  /api/user
+
+* **Method:**
+  
+  `PUT`
+  
+* **Data Params**
+
+```
+	{
+		"Id": "Guid",	
+		"Email": "string",
+		"Password": "string",
+		"FirstName": "string",
+		"LastName": "string",
+		"Address": "string",
+		"Phone": "string"
+	}
+```
+* **Success Response:**
+
+  * **Code:** 200 <br />
+    **Content:** 
+
+* **Error Response:**
+
+  * **Code:** 400 BAD REQUEST <br />
+  OR
+  * **Code:** 412 PRECONDITION FAILED 
+    
+**Delete User** 
+------
+* **URL**
+
+  /api/user
+
+* **Method:**
+  
+  `DELETE`
+  
+* **Data Params**
+
+```
+	{
+		"Id": "Guid",	
+		"Email": "string",
+		"Password": "string",
+		"FirstName": "string",
+		"LastName": "string",
+		"Address": "string",
+		"Phone": "string"
+	}
+```
+* **Success Response:**
+
+  * **Code:** 200 <br />
+    **Content:** 
+
 * **Error Response:**
 
   * **Code:** 400 BAD REQUEST <br />
@@ -112,10 +215,6 @@
   * **Code:** 412 PRECONDITION FAILED 
 
 
-
-    
-    
-    
     
     
     
