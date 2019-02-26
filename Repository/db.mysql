@@ -1,0 +1,141 @@
+-- MySQL dump 10.13  Distrib 8.0.5, for Win64 (x86_64)
+--
+-- Host: localhost    Database: db
+-- ------------------------------------------------------
+-- Server version	8.0.15
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+ SET NAMES utf8 ;
+/*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
+/*!40103 SET TIME_ZONE='+00:00' */;
+/*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
+/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
+/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
+/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
+
+--
+-- Current Database: `db`
+--
+
+/*!40000 DROP DATABASE IF EXISTS `db`*/;
+
+CREATE DATABASE /*!32312 IF NOT EXISTS*/ `db` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci */;
+
+USE `db`;
+
+--
+-- Table structure for table `books`
+--
+
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+ SET character_set_client = utf8mb4 ;
+CREATE TABLE `books` (
+  `ISBN` varchar(32) DEFAULT NULL,
+  `Title` varchar(255) DEFAULT NULL,
+  `Author` varchar(255) DEFAULT NULL,
+  `Language` varchar(36) DEFAULT NULL,
+  `Pages` varchar(10) DEFAULT NULL,
+  `id` char(36) NOT NULL,
+  `Price` int(11) DEFAULT NULL,
+  `In_Stock` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `books`
+--
+
+/*!40000 ALTER TABLE `books` DISABLE KEYS */;
+INSERT INTO `books` VALUES ('555222','TEST4','TEST4 AUTHOR','Svenska','100','2913400b-be1c-4304-a44d-b4b663ac6c2e',250,10),('1234566','TEST3','TEST3 AUTHOR','Svenska','500','594b4472-6bbc-4762-b3b6-1917abb1d728',100,2),('54321','TEST2','TEST2 AUTHOR','Svenska','500','c195fa11-5620-4072-b59f-8fff34357c6c',150,3),('5885522','TEST5','TEST5 AUTHOR','Svenska','100','de48cb38-1c71-4bda-8b87-1ae1ffe5ed74',300,2),('12345','TEST','TEST AUTHOR','Svenska','500','f28c0e26-7c7a-4c1d-9af9-859288a0fa53',100,1);
+/*!40000 ALTER TABLE `books` ENABLE KEYS */;
+
+--
+-- Table structure for table `purchase`
+--
+
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+ SET character_set_client = utf8mb4 ;
+CREATE TABLE `purchase` (
+  `id` char(36) NOT NULL,
+  `user_id` char(36) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `id_UNIQUE` (`id`),
+  KEY `user_id_idx` (`user_id`),
+  CONSTRAINT `user_id` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `purchase`
+--
+
+/*!40000 ALTER TABLE `purchase` DISABLE KEYS */;
+INSERT INTO `purchase` VALUES ('b7721a01-8f76-42b2-9c6f-166e8f7da1ee','0d1bdce9-332d-4e88-8451-9c1db3d9c90d'),('27f37ab0-103a-4dd1-85cf-e544a2904dbf','a00be1d4-016b-4fd1-86c1-bd498ee21073'),('acb37ed0-d0aa-45db-9cbb-7b2517108eae','a00be1d4-016b-4fd1-86c1-bd498ee21073'),('de7d7de8-b5f7-43c8-8c9b-94782b29bb86','a00be1d4-016b-4fd1-86c1-bd498ee21073');
+/*!40000 ALTER TABLE `purchase` ENABLE KEYS */;
+
+--
+-- Table structure for table `purchase_item`
+--
+
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+ SET character_set_client = utf8mb4 ;
+CREATE TABLE `purchase_item` (
+  `purchase_id` char(36) NOT NULL,
+  `book_id` char(36) NOT NULL,
+  `total_price` int(11) DEFAULT NULL,
+  `number_of_items` int(11) DEFAULT NULL,
+  PRIMARY KEY (`purchase_id`,`book_id`),
+  KEY `book_id_idx` (`book_id`),
+  CONSTRAINT `book_id` FOREIGN KEY (`book_id`) REFERENCES `books` (`id`),
+  CONSTRAINT `purchase_id` FOREIGN KEY (`purchase_id`) REFERENCES `purchase` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `purchase_item`
+--
+
+/*!40000 ALTER TABLE `purchase_item` DISABLE KEYS */;
+INSERT INTO `purchase_item` VALUES ('27f37ab0-103a-4dd1-85cf-e544a2904dbf','594b4472-6bbc-4762-b3b6-1917abb1d728',200,2),('27f37ab0-103a-4dd1-85cf-e544a2904dbf','c195fa11-5620-4072-b59f-8fff34357c6c',150,1),('acb37ed0-d0aa-45db-9cbb-7b2517108eae','594b4472-6bbc-4762-b3b6-1917abb1d728',200,2),('acb37ed0-d0aa-45db-9cbb-7b2517108eae','c195fa11-5620-4072-b59f-8fff34357c6c',150,1),('b7721a01-8f76-42b2-9c6f-166e8f7da1ee','594b4472-6bbc-4762-b3b6-1917abb1d728',200,2),('b7721a01-8f76-42b2-9c6f-166e8f7da1ee','c195fa11-5620-4072-b59f-8fff34357c6c',150,1),('de7d7de8-b5f7-43c8-8c9b-94782b29bb86','594b4472-6bbc-4762-b3b6-1917abb1d728',200,2),('de7d7de8-b5f7-43c8-8c9b-94782b29bb86','c195fa11-5620-4072-b59f-8fff34357c6c',150,1);
+/*!40000 ALTER TABLE `purchase_item` ENABLE KEYS */;
+
+--
+-- Table structure for table `users`
+--
+
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+ SET character_set_client = utf8mb4 ;
+CREATE TABLE `users` (
+  `id` char(36) NOT NULL,
+  `email` varchar(45) DEFAULT NULL,
+  `password` varchar(45) DEFAULT NULL,
+  `first_name` varchar(45) DEFAULT NULL,
+  `last_name` varchar(45) DEFAULT NULL,
+  `address` varchar(45) DEFAULT NULL,
+  `phone` varchar(45) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `email_UNIQUE` (`email`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `users`
+--
+
+/*!40000 ALTER TABLE `users` DISABLE KEYS */;
+INSERT INTO `users` VALUES ('089ae611-93ea-47b0-b673-9b29b5294f34','test2@test.is','password','john2','Doe','home2',NULL),('0d1bdce9-332d-4e88-8451-9c1db3d9c90d','test111@test.is','password','john111','Doe','home111',NULL),('a00be1d4-016b-4fd1-86c1-bd498ee21073','test@test.is','password','john','Doe','home','12345'),('ee3c800a-032d-4526-baf4-fa5fc4bd84b2','test11@test.is','pasword22','john11','Doe','home11','555555'),('System.Byte[]','test','password','john','Doe','home','');
+/*!40000 ALTER TABLE `users` ENABLE KEYS */;
+/*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
+
+/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
+/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
+/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
+
+-- Dump completed on 2019-02-26 10:48:25
