@@ -7,7 +7,7 @@ namespace Repository
 {
 	public class BookRepository : IBookRepository
 	{
-		private string connectionString = "server=localhost;user=root;database=db;port=3306;password=Test@123";
+		private string connectionString = "****";
 		private MySqlConnection connection;
 
 		public BookRepository()

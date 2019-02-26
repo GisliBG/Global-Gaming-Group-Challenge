@@ -9,7 +9,7 @@ namespace Repository
 {
 	public class UserRepository : IUserRepository
 	{
-		private string connectionString = "server=localhost;user=root;database=db;port=3306;password=Test@123";
+		private string connectionString = "****";
 		private MySqlConnection connection;
 
 		public UserRepository()
@@ -181,7 +181,7 @@ namespace Repository
 						Quantity = reader.GetInt32(3)
 					});
 				}
-
+				reader.Close();
 				connection.Close();
 				return purchases;
 			}
