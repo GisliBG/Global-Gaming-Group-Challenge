@@ -125,14 +125,65 @@ namespace Repository
 
 				foreach(var purchaseItem in purchase.purchaseItems)
 				{
-					string purchaseItemSQL = "INSERT INTO PURCHASE_ITEM (id, book_id, total_price, number_of_items) VALUES (@id, @bookId, @totalPrice, @numberOfItems)";
+					string purchaseItemSQL = "INSERT INTO PURCHASE_ITEM (purchase_id, book_id, total_price, number_of_items) VALUES (@purchaseId, @bookId, @totalPrice, @numberOfItems)";
 					cmd = new MySqlCommand(purchaseItemSQL, connection);
-					cmd.Parameters.Add("@id", MySqlDbType.Binary).Value = purchaseItem.Id;
+					cmd.Parameters.Add("@purchaseId", MySqlDbType.Binary).Value = purchase.Id;
 					cmd.Parameters.Add("@bookId", MySqlDbType.Binary).Value = purchaseItem.Book.id;
 					cmd.Parameters.AddWithValue("@totalPrice", purchaseItem.Book.Price * purchaseItem.Quantity);
 					cmd.Parameters.AddWithValue("@numberOfItems", purchaseItem.Quantity);
 					cmd.ExecuteNonQuery();
 				}
+			}
+			catch (Exception ex)
+			{
+				throw ex;
+			}
+		}
+
+		public List<Purchase> GetPurchases(Guid userId)
+		{
+			try
+			{
+				connection.Open();
+				string sql =	"SELECT P.id, PI.book_id, PI.total_price, PI.number_of_items, b.title, b.author, b.ISBN, b.Language, b.pages, b.price, b.In_stock " +
+								"FROM PURCHASE AS P " +
+								"Left JOIN PURCHASE_ITEM AS PI ON p.id = PI.purchase_id " +
+								"Left JOIN Books as b ON PI.book_id = b.id " +
+								"WHERE p.user_id = @userId";
+				MySqlCommand cmd = new MySqlCommand(sql, connection);
+				cmd.Parameters.Add("@userId", MySqlDbType.Binary).Value = userId;
+
+				var reader = cmd.ExecuteReader();
+
+				List<Purchase> purchases = new List<Purchase>();
+				while (reader.Read())
+				{
+					if(purchases.Find(p => p.Id == reader.GetGuid(0)) == null)
+					{
+						purchases.Add(new Purchase() { Id = reader.GetGuid(0), purchaseItems = new List<PurchaseItem>() });
+					}
+					
+					purchases[purchases.Count - 1].purchaseItems.Add(new PurchaseItem()
+					{
+						Id = reader.GetGuid(0),
+						Book = new Model.Book.Book()
+						{
+							id = reader.GetGuid(1),
+							Title = reader.GetString(4),
+							Author = reader.GetString(5),
+							ISBN = reader.GetString(6),
+							Language = reader.GetString(7),
+							Pages = reader.GetString(8),
+							Price = reader.GetInt32(9),
+							InStock = reader.GetInt32(10)
+						},
+						TotalPrice = reader.GetInt32(2),
+						Quantity = reader.GetInt32(3)
+					});
+				}
+
+				connection.Close();
+				return purchases;
 			}
 			catch (Exception ex)
 			{

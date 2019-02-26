@@ -12,5 +12,6 @@ namespace Model.User
 		User GetUser(Guid id);
 		void Update(User user);
 		void PurchaseBooks(Purchase.Purchase purchase, Guid userId);
+		List<Purchase.Purchase> GetPurchases(Guid userId);
 	}
 }

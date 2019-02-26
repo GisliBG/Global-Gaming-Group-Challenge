@@ -13,6 +13,11 @@ namespace Test.CoreTests
 			return user;
 		}
 
+		public List<Purchase> GetPurchases(Guid userId)
+		{
+			throw new NotImplementedException();
+		}
+
 		public User GetUser(Guid id)
 		{
 			throw new NotImplementedException();

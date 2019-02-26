@@ -34,6 +34,18 @@ namespace Core
 			}
 		}
 
+		public List<Purchase> GetPurchases(Guid userId)
+		{
+			try
+			{
+				return _userRepository.GetPurchases(userId);	
+			}
+			catch(Exception ex)
+			{
+				throw ex;
+			}
+		}
+
 		public User GetUser(Guid userId)
 		{
 			try
@@ -56,7 +68,7 @@ namespace Core
 				var books = _bookRepository.GetAll();
 				foreach(PurchaseItem purchaseItem in purchase.purchaseItems)
 				{
-					purchaseItem.Id = Guid.NewGuid();
+					purchaseItem.Id = purchase.Id;
 					purchaseItem.Book = books.Find(book => book.id == purchaseItem.Book.id);
 				}
 				_userRepository.PurchaseBooks(purchase, userId);

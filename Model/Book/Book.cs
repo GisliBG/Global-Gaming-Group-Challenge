@@ -15,10 +15,8 @@ namespace Model.Book
 		public string Author { get; set; }
 		public string Language { get; set; }
 		public string Pages { get; set; }
-		[Required]
 		[Range(0, int.MaxValue)]
 		public int Price { get; set; }
-		[Required]
 		[Range(0, int.MaxValue)]
 		public int InStock { get; set; }
 	}

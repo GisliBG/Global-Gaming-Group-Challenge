@@ -9,6 +9,7 @@ namespace Model.Purchase
 	{
 		public Guid Id { get; set; }
 		public Book.Book Book { get; set; }
+		public int TotalPrice { get; set; }
 		public int Quantity { get; set; }
 	}
 }

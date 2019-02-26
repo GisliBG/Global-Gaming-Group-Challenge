@@ -24,7 +24,7 @@ namespace API.Controllers
 		[HttpGet("{userId}")]
 		public IActionResult GetUser(string userId)
 		{
-			if(userId == null)
+			if(String.IsNullOrEmpty(userId))
 			{
 				return BadRequest();
 			}
@@ -95,7 +95,7 @@ namespace API.Controllers
 		[HttpDelete]
 		public IActionResult RemoveUser([FromBody] User user)
 		{
-			if (user == null || user.Id == null || user.Password == null)
+			if (user == null || user.Id == null || String.IsNullOrEmpty(user.Password))
 			{
 				return BadRequest();
 			}
@@ -108,6 +108,26 @@ namespace API.Controllers
 			catch(Exception ex)
 			{
 				_logger.LogError("Error creating new user", ex);
+				return new StatusCodeResult(StatusCodes.Status500InternalServerError);
+			}
+		}
+
+		[HttpGet("Purchase/{userId}")]
+		public IActionResult GetPurchases(string userId)
+		{
+			if(String.IsNullOrEmpty(userId))
+			{
+				return BadRequest();
+			}
+
+			try
+			{
+				List<Purchase> purchases = _userService.GetPurchases(new Guid(userId));
+				return Ok(purchases);
+			}
+			catch (Exception ex)
+			{
+				_logger.LogError("Error fetching purchases", ex);
 				return new StatusCodeResult(StatusCodes.Status500InternalServerError);
 			}
 		}
