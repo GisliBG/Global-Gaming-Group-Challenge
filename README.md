@@ -21,18 +21,18 @@
   ```
 * **Success Response:**
 
-  * **Code:** 200 <br />
-    **Content:** 
-     ```
-    {
-    "Id": "Guid",
-    "ISBN": "string",
-    "Title": "string",
-    "Author": "string",
-    "Language": "string",
-    "Pages": "string"
-    }
-  ```
+* **Code:** 200 <br />
+**Content:** <br />
+```
+	{
+	"Id": "Guid",
+	"ISBN": "string",
+	"Title": "string",
+	"Author": "string",
+	"Language": "string",
+	"Pages": "string"
+	}
+```
 * **Error Response:**
 
   * **Code:** 400 BAD REQUEST <br />
@@ -214,8 +214,96 @@
   OR
   * **Code:** 412 PRECONDITION FAILED 
 
+**Purchase book** 
+------
+* **URL**
 
-    
+  /api/user/purchase/:userId
+
+* **Method:**
+  
+  `POST`
+  
+* **Data Params**
+
+	```
+		[
+			{
+				"Book": 
+					{ 
+						"Id": "Guid", 
+						"Title": "string", 
+						"ISBN": "string"
+					}, 
+				"Quantity": 2
+			},
+			.....
+		]
+	```
+* **Success Response:**
+
+  * **Code:** 200 <br />
+    **Content:** 
+	```
+		{
+      "id": "Guid",
+      "purchaseItems": [
+          {
+              "id": "Guid",
+              "book": {
+                  "id": "Guid",
+                  ...
+              },
+              "totalPrice": 0,
+              "quantity": 2
+          },
+          ...
+        ]
+    }
+	```
+
+* **Error Response:**
+
+  * **Code:** 400 BAD REQUEST <br />
+
+**Purchase History** 
+------
+* **URL**
+
+  /api/user/purchase/:userId
+
+* **Method:**
+  
+  `GET`
+  
+* **Success Response:**
+
+  * **Code:** 200 <br />
+    **Content:** 
+  ```
+    [
+      {
+        "id": "Guid",
+        "purchaseItems": [
+            {
+                "id": "Guid",
+                "book": {
+                    "id": "Guid",
+                    ...
+                },
+                "totalPrice": 0,
+                "quantity": 2
+            },
+            ...
+          ]
+      },
+      ...
+    ]
+  ```
+
+* **Error Response:**
+
+  * **Code:** 400 BAD REQUEST <br />
     
     
     
